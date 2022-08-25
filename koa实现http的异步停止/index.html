@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 id="text">
+        statr<br />
+    </h1>
+    <button id="rock">石头</button>
+    <button id="seissor">剪刀</button>
+    <button id="paper">布</button>
+</body>
+<script>
+    const $btn = {
+        rock: document.getElementById("rock"),
+        seissor: document.getElementById("seissor"),
+        paper: document.getElementById("paper"),
+    };
+    const $text = document.getElementById("text");
+    Object.keys($btn).forEach(item => {
+        $btn[item].addEventListener('click', function () {
+            console.log(item);
+            fetch(`${location}/game?action=${item}`)
+                .then(res => {
+                    return res.text()
+                })
+                .then(text => {
+                    $text.innerHTML += text + "<br/>";
+                })
+        })
+    })
+</script>
+
+</html>
