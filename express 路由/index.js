@@ -2,6 +2,19 @@ const http = require("http");  //导入模块
 const fs = require("fs")
 const url = require("url")
 const express = require('express')
+var sql = require('mssql')
+//链接方式："mssql://用户名:密码@ip地址:1433(默认端口号)/数据库名称"
+sql.connect("mssql://sa:123456@localhost:1433/bk_stores").then(function () {
+    //Query
+    new sql.Request().query('select * from Table_1').then(function (recordset) {
+        console.log(recordset);
+    }).catch(function (err) {
+        console.log(err);
+    })
+    // Stored Procedure
+}).catch(function (err) {
+    console.log(err);
+})
 // const queryString = require("querystring") //插件已经失效
 const queryString = require("./queryString")
 const palyFun = require("./lib")
