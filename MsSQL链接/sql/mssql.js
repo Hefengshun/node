@@ -157,6 +157,25 @@ let add = async function (addObj, tableName, callBack) {
         console.log(e)
     }
 };
+let addUser = async function (addObj, tableName, callBack) {
+    try {
+        let ps = new mssql.PreparedStatement(await poolConnect);
+        let sql = `INSERT INTO ${tableName}(username, password, mobile) VALUES('${addObj.username}', '${addObj.password}', '加油!')`
+        console.log(sql);
+        ps.prepare(sql, function (err) {
+            if (err) console.log(err);
+            ps.execute(addObj, function (err, recordset) {
+                callBack(err, recordset);
+                ps.unprepare(function (err) {
+                    if (err)
+                        console.log(err);
+                });
+            });
+        });
+    } catch (e) {
+        console.log(e)
+    }
+};
 
 /**
  * 更新指定表的数据
@@ -250,6 +269,7 @@ exports.config = conf;
 exports.del = del;
 exports.select = select;
 exports.update = update;
+exports.addUser = addUser;
 exports.querySql = querySql;
 exports.selectAll = selectAll;
 exports.add = add;
